@@ -12,7 +12,11 @@ PluginImporter:
   validateReferences: 1
   platformData:
   - first:
-<<<<<<< HEAD
+      : 
+    second:
+      enabled: 0
+      settings: {}
+  - first:
       : Any
     second:
       enabled: 0
@@ -31,8 +35,6 @@ PluginImporter:
       settings:
         CPU: ARMv7
   - first:
-=======
->>>>>>> 0dbc1b89837988408af8895b30b94a0ec0993b5c
       Any: 
     second:
       enabled: 1
@@ -42,7 +44,6 @@ PluginImporter:
     second:
       enabled: 0
       settings:
-<<<<<<< HEAD
         CPU: AnyCPU
         DefaultValueInitialized: true
         OS: AnyOS
@@ -51,28 +52,25 @@ PluginImporter:
     second:
       enabled: 0
       settings:
-        CPU: None
+        CPU: x86_64
   - first:
       Standalone: OSXUniversal
     second:
       enabled: 0
       settings:
-        CPU: None
+        CPU: x86_64
   - first:
       Standalone: Win
     second:
       enabled: 0
       settings:
-        CPU: None
+        CPU: x86
   - first:
       Standalone: Win64
     second:
       enabled: 0
       settings:
-        CPU: None
-=======
-        DefaultValueInitialized: true
->>>>>>> 0dbc1b89837988408af8895b30b94a0ec0993b5c
+        CPU: x86_64
   - first:
       Windows Store Apps: WindowsStoreApps
     second:

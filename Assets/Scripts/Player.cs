@@ -22,9 +22,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool _isTripleShotActive = false;
     [SerializeField]
-    private bool _isSpeedBoostActive = false;
-    [SerializeField]
     private bool _isShieldActive = false;
+    private bool _isPlayerInvulnerable;
+    private float _playerDamageTime;
+    private float _playerSafePeriod = 0.2f;
 
     //variable reference to the shield visualiser
     [SerializeField]
@@ -113,16 +114,26 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        //If shield active
-        //do nothing
-        if (_isShieldActive == true)
+        if (_playerDamageTime < Time.time)
         {
-            _isShieldActive = false;
-            _shieldVisualiser.SetActive(false);
-            return;
+            _isPlayerInvulnerable = false;
         }
 
-        _lives -= 1;
+        if (_isPlayerInvulnerable == false)
+        {
+            if (_isShieldActive == true)
+            {
+                _isShieldActive = false;
+                _shieldVisualiser.SetActive(false);
+                return;
+            }
+
+            _lives -= 1;
+
+            _isPlayerInvulnerable = true;
+            _playerDamageTime = Time.time + _playerSafePeriod;
+        }
+
 
         if (_lives == 2)
         {
@@ -159,7 +170,6 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
-        _isSpeedBoostActive = true;
         _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
@@ -167,7 +177,6 @@ public class Player : MonoBehaviour
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        _isSpeedBoostActive = false;
         _speed /= _speedMultiplier;
     }
 
@@ -177,8 +186,6 @@ public class Player : MonoBehaviour
         _shieldVisualiser.SetActive(true);
     }
 
-    //method to add 10 to score
-    //communicate with UI to update score
     public void AddScore(int points)
     {
         _score += points;
