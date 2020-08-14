@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
     private float _playerDamageTime;
     private float _playerSafePeriod = 0.2f;
 
-    //variable reference to the shield visualiser
     [SerializeField]
     private GameObject _shieldVisualiser;
     [SerializeField]
@@ -43,7 +42,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        //set initial location to zero in all axes
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -69,7 +67,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         CalculateMovement();
@@ -78,20 +75,23 @@ public class Player : MonoBehaviour
         {
             FireLaser();
         }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            _speed = 16f;
+        }
+        else
+        {
+            _speed = 10f;
+        }
     }
 
     void CalculateMovement()
     {
-        //create local variables for horizontal and vertical input
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-
-        //create vector3 variable to handle horizontal and vert inputs
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-
         transform.Translate(direction * _speed * Time.deltaTime);
-
-        //Constrain movement in x and y
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9, 9), Mathf.Clamp(transform.position.y, -3.8f, 1.2f), 0);
     }
 
