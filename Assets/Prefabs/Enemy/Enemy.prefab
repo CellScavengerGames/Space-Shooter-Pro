@@ -49,11 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemySpeed: 4
-<<<<<<< HEAD
-  _laserPrefab: {fileID: 4558211317154019664, guid: 8201d0ef7a97e0e45983210ee4a601c3,
-    type: 3}
-=======
->>>>>>> 0dbc1b89837988408af8895b30b94a0ec0993b5c
+  _laserPrefab: {fileID: 0}
 --- !u!212 &2448445572683714793
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -90,7 +86,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -230997251
+  m_SortingLayerID: -317691741
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3154912113cbb4a498df6f571c74e18c, type: 3}
@@ -138,11 +134,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-<<<<<<< HEAD
-  m_Offset: {x: -0.017071009, y: 0.0597713}
-=======
   m_Offset: {x: -0.017071009, y: 0.017071128}
->>>>>>> 0dbc1b89837988408af8895b30b94a0ec0993b5c
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -153,11 +145,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-<<<<<<< HEAD
-  m_Size: {x: 2.2861705, y: 2.8494773}
-=======
   m_Size: {x: 2.2861705, y: 2.9348776}
->>>>>>> 0dbc1b89837988408af8895b30b94a0ec0993b5c
   m_EdgeRadius: 0
 --- !u!95 &138151876284999690
 Animator:
@@ -204,11 +192,7 @@ AudioSource:
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-<<<<<<< HEAD
-  BypassReverbZones: 1
-=======
   BypassReverbZones: 0
->>>>>>> 0dbc1b89837988408af8895b30b94a0ec0993b5c
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:

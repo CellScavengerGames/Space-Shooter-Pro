@@ -19,20 +19,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
     private SpawnManager _spawnManager;
-<<<<<<< HEAD
-    private bool _isTripleShotActive = false;
-    private bool _isShieldActive = false;
-    private bool _isPlayerInvulnerable;
-    private float _playerDamageTime;
-    private float _playerSafetyPeriod = 0.2f;
-=======
     [SerializeField]
     private bool _isTripleShotActive = false;
     [SerializeField]
     private bool _isSpeedBoostActive = false;
     [SerializeField]
     private bool _isShieldActive = false;
->>>>>>> 0dbc1b89837988408af8895b30b94a0ec0993b5c
 
     //variable reference to the shield visualiser
     [SerializeField]
@@ -121,29 +113,6 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-<<<<<<< HEAD
-        if (_playerDamageTime < Time.time)
-        {
-            _isPlayerInvulnerable = false;
-        }
-
-        if (_isPlayerInvulnerable == false)
-        {
-            if (_isShieldActive == true)
-            {
-                _isShieldActive = false;
-                _shieldVisualiser.SetActive(false);
-                _isPlayerInvulnerable = true;
-                _playerDamageTime = Time.time + _playerSafetyPeriod;
-                return;
-            }
-
-            _lives -= 1;
-
-            _isPlayerInvulnerable = true;
-            _playerDamageTime = Time.time + _playerSafetyPeriod;
-        }
-=======
         //If shield active
         //do nothing
         if (_isShieldActive == true)
@@ -154,7 +123,6 @@ public class Player : MonoBehaviour
         }
 
         _lives -= 1;
->>>>>>> 0dbc1b89837988408af8895b30b94a0ec0993b5c
 
         if (_lives == 2)
         {
@@ -191,10 +159,7 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
-<<<<<<< HEAD
-=======
         _isSpeedBoostActive = true;
->>>>>>> 0dbc1b89837988408af8895b30b94a0ec0993b5c
         _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
@@ -202,10 +167,7 @@ public class Player : MonoBehaviour
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-<<<<<<< HEAD
-=======
         _isSpeedBoostActive = false;
->>>>>>> 0dbc1b89837988408af8895b30b94a0ec0993b5c
         _speed /= _speedMultiplier;
     }
 

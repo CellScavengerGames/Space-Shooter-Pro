@@ -38,11 +38,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-<<<<<<< HEAD
-      "version": "1.1.16",
-=======
       "version": "1.1.14",
->>>>>>> 0dbc1b89837988408af8895b30b94a0ec0993b5c
       "depth": 0,
       "source": "registry",
       "dependencies": {

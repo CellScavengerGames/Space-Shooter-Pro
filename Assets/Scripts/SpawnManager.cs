@@ -12,13 +12,10 @@ public class SpawnManager : MonoBehaviour
     private GameObject[] powerups;
 
     private bool _stopSpawning = false;
-<<<<<<< HEAD
-=======
     void Start()
     {
 
     }
->>>>>>> 0dbc1b89837988408af8895b30b94a0ec0993b5c
 
     public void StartSpawning()
     {
@@ -26,14 +23,11 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnPowerupRoutine());
     }
 
-<<<<<<< HEAD
-=======
     void Update()
     {
 
     }
 
->>>>>>> 0dbc1b89837988408af8895b30b94a0ec0993b5c
     IEnumerator SpawnEnemyRoutine()
     {
         yield return new WaitForSeconds(3.0f);
