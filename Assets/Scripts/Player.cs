@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     private bool _isTripleShotActive = false;
     [SerializeField]
     private bool _isShieldActive = false;
+    private bool _isSpeedBoostActive = false;
     private bool _isPlayerInvulnerable;
     private float _playerDamageTime;
     private float _playerSafePeriod = 0.2f;
@@ -70,17 +71,22 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
-
+        /*
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
         }
+        */
+        if (Input.GetButtonDown("Fire1") && Time.time > _canFire)
+        {
+            FireLaser();
+        }
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetButton("Trigger1") && _isSpeedBoostActive == false)
         {
             _speed = 16f;
         }
-        else
+        else if (Input.GetButtonUp("Trigger1") && _isSpeedBoostActive == false)
         {
             _speed = 10f;
         }
@@ -170,6 +176,8 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
+        _speed = 10f;
+        _isSpeedBoostActive = true;
         _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
@@ -177,6 +185,7 @@ public class Player : MonoBehaviour
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
+        _isSpeedBoostActive = false;
         _speed /= _speedMultiplier;
     }
 
