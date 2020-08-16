@@ -13,8 +13,8 @@ public class Enemy : MonoBehaviour
     private AudioSource _audioSource;
     private bool _isEnemyDestroyed = false;
 
-    private float _canFire = -1f;
     private float _fireRate = 3f;
+    private float _canFire = -1f;
     [SerializeField]
     private GameObject _enemyLaserPrefab;
 

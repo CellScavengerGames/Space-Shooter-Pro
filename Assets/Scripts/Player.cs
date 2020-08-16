@@ -41,12 +41,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _laserShotClip;
 
+    private Animator _playerAnim;
+
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
+        _playerAnim = GetComponent<Animator>();
 
         if (_spawnManager == null)
         {
@@ -65,6 +68,11 @@ public class Player : MonoBehaviour
         else
         {
             _audioSource.clip = _laserShotClip;
+        }
+
+        if (_playerAnim == null)
+        {
+            Debug.LogError("Player Animator is NULL");
         }
     }
 
@@ -96,9 +104,16 @@ public class Player : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
+        float _inputX = Input.GetAxisRaw("Horizontal");
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(direction * _speed * Time.deltaTime);
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9, 9), Mathf.Clamp(transform.position.y, -3.8f, 1.2f), 0);
+        bool isMoving = (Mathf.Abs(_inputX)) > 0;
+        _playerAnim.SetBool("isMoving", isMoving);
+        if (isMoving)
+        {
+            _playerAnim.SetFloat("x", _inputX);
+        }
     }
 
     void FireLaser()
