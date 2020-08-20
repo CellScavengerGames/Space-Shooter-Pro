@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     private bool _isTripleShotActive = false;
     [SerializeField]
     private bool _isShieldActive = false;
+    private int _shieldState = 0;
     private bool _isSpeedBoostActive = false;
     private bool _isPlayerInvulnerable;
     private float _playerDamageTime;
@@ -42,6 +43,7 @@ public class Player : MonoBehaviour
     private AudioClip _laserShotClip;
 
     private Animator _playerAnim;
+    private Shield _shieldStateColor;
 
     void Start()
     {
@@ -50,7 +52,7 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
         _playerAnim = GetComponent<Animator>();
-
+        _shieldStateColor = GameObject.Find("Shield").GetComponentInChildren<Shield>();
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL.");
@@ -142,17 +144,49 @@ public class Player : MonoBehaviour
 
         if (_isPlayerInvulnerable == false)
         {
-            if (_isShieldActive == true)
+            /*if (_isShieldActive == true)
             {
                 _isShieldActive = false;
                 _shieldVisualiser.SetActive(false);
                 return;
-            }
+            }*/
 
-            _lives -= 1;
+            if (_shieldState == 3)
+            {
+                _shieldStateColor.ShieldColor(2);
+                _shieldState -= 1;
+                _isPlayerInvulnerable = true;
+                _playerDamageTime = Time.time + _playerSafePeriod;
+                return;
+            }
+            else if (_shieldState == 2)
+            {
+                _shieldStateColor.ShieldColor(1);
+                _shieldState -= 1;
+                _isPlayerInvulnerable = true;
+                _playerDamageTime = Time.time + _playerSafePeriod;
+                return;
+            }
+            else if (_shieldState == 1)
+            {
+                //_shieldVisualiser.SetActive(false);
+                _shieldStateColor.ShieldColor(0);
+                _shieldState -= 1;
+                _isPlayerInvulnerable = true;
+                _playerDamageTime = Time.time + _playerSafePeriod;
+                return;
+            }
+            else
+            {
+                _lives -= 1;
+
+                _isPlayerInvulnerable = true;
+                _playerDamageTime = Time.time + _playerSafePeriod;
+            }
+            /*_lives -= 1;
 
             _isPlayerInvulnerable = true;
-            _playerDamageTime = Time.time + _playerSafePeriod;
+            _playerDamageTime = Time.time + _playerSafePeriod;*/
         }
 
 
@@ -206,8 +240,9 @@ public class Player : MonoBehaviour
 
     public void ShieldActive()
     {
-        _isShieldActive = true;
-        _shieldVisualiser.SetActive(true);
+        _shieldState = 3;
+        //_shieldVisualiser.SetActive(true);
+        _shieldStateColor.ShieldColor(3);
     }
 
     public void AddScore(int points)
