@@ -18,6 +18,10 @@ public class Player : MonoBehaviour
     private float _canFire = -1f;
     [SerializeField]
     private int _lives = 3;
+    [SerializeField]
+    private int _startAmmo = 15;
+    [SerializeField]
+    private int _currentAmmo;
     private SpawnManager _spawnManager;
     [SerializeField]
     private bool _isTripleShotActive = false;
@@ -47,6 +51,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        _currentAmmo = _startAmmo;
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -132,6 +137,9 @@ public class Player : MonoBehaviour
         }
 
         _audioSource.Play();
+
+        _currentAmmo -= 1;
+        PlayerAmmo();
 
     }
 
@@ -249,5 +257,10 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uiManager.UpdateScore(_score);
+    }
+
+    public void PlayerAmmo()
+    {
+        _uiManager.UpdateAmmo(_currentAmmo);
     }
 }
