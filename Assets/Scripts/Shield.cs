@@ -29,7 +29,7 @@ public class Shield : MonoBehaviour
                 _shieldStateColor.color = new Color(255, 0, 0, 255);
                 break;
             case 2:
-                _shieldStateColor.color = new Color(255, 100, 0, 255);
+                _shieldStateColor.color = new Color(135, 0, 255, 255);
                 break;
             case 3:
                 _shieldStateColor.color = new Color(0, 255, 0, 255);

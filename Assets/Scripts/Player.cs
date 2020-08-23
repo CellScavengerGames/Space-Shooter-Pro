@@ -127,6 +127,11 @@ public class Player : MonoBehaviour
     {
         _canFire = Time.time + _fireRate;        
 
+        if (_currentAmmo <= 0)
+        {
+            return;
+        }
+
         if (_isTripleShotActive == true)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
@@ -138,8 +143,7 @@ public class Player : MonoBehaviour
 
         _audioSource.Play();
 
-        _currentAmmo -= 1;
-        PlayerAmmo();
+        PlayerAmmo(-1);
 
     }
 
@@ -259,8 +263,9 @@ public class Player : MonoBehaviour
         _uiManager.UpdateScore(_score);
     }
 
-    public void PlayerAmmo()
+    public void PlayerAmmo(int updateAmmo)
     {
+        _currentAmmo += updateAmmo;
         _uiManager.UpdateAmmo(_currentAmmo);
     }
 }
