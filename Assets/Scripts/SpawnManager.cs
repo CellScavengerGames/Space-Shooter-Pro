@@ -22,6 +22,7 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
         StartCoroutine(SpawnAmmoRoutine());
+        StartCoroutine(SpawnRepairRoutine());
     }
 
     void Update()
@@ -55,12 +56,23 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnAmmoRoutine()
     {
-        yield return new WaitForSeconds(45.0f);
+        yield return new WaitForSeconds(40.0f);
         while (_stopSpawning == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-9f, 9f), 7f, 0);
             Instantiate(powerups[3], posToSpawn, Quaternion.identity);
             yield return new WaitForSeconds(30);
+        }
+    }
+
+    IEnumerator SpawnRepairRoutine()
+    {
+        yield return new WaitForSeconds(50.0f);
+        while (_stopSpawning == false)
+        {
+            Vector3 posToSpawn = new Vector3(Random.Range(-9f, 9f), 7f, 0);
+            Instantiate(powerups[4], posToSpawn, Quaternion.identity);
+            yield return new WaitForSeconds(60);
         }
     }
 

@@ -268,4 +268,19 @@ public class Player : MonoBehaviour
         _currentAmmo += updateAmmo;
         _uiManager.UpdateAmmo(_currentAmmo);
     }
+
+    public void RestoreHealth()
+    {
+        _lives += 1;
+        if (_lives >= 3)
+        {
+            _lives = 3;
+            _rightEngineVisualiser.SetActive(false);
+            _leftEngineVisualiser.SetActive(false);
+        } else if (_lives == 2)
+        {
+            _leftEngineVisualiser.SetActive(false);
+        }
+        _uiManager.UpdateLives(_lives);
+    }
 }
