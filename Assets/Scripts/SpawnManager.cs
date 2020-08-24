@@ -44,13 +44,13 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
-        yield return new WaitForSeconds(30.0f);
+        yield return new WaitForSeconds(10.0f);
         while (_stopSpawning == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-9f, 9f), 7f, 0);
-            int randomPowerup = Random.Range(0, 3);
+            int randomPowerup = Random.Range(0, 4);
             Instantiate(powerups[randomPowerup], posToSpawn, Quaternion.identity);
-            yield return new WaitForSeconds(60);
+            yield return new WaitForSeconds(5);
         }
     }
 
@@ -60,7 +60,7 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-9f, 9f), 7f, 0);
-            Instantiate(powerups[3], posToSpawn, Quaternion.identity);
+            Instantiate(powerups[4], posToSpawn, Quaternion.identity);
             yield return new WaitForSeconds(30);
         }
     }
@@ -71,7 +71,7 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-9f, 9f), 7f, 0);
-            Instantiate(powerups[4], posToSpawn, Quaternion.identity);
+            Instantiate(powerups[5], posToSpawn, Quaternion.identity);
             yield return new WaitForSeconds(60);
         }
     }

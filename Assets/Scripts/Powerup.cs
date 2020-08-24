@@ -48,9 +48,12 @@ public class Powerup : MonoBehaviour
                         player.ShieldActive();
                         break;
                     case 3:
-                        player.PlayerAmmo(10);
+                        player.PhotonActive();
                         break;
                     case 4:
+                        player.PlayerAmmo(10);
+                        break;
+                    case 5:
                         player.RestoreHealth();
                         break;
                     default:

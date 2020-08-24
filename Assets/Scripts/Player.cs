@@ -5,30 +5,30 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    //create movement speed variable
     [SerializeField]
     private float _speed = 10f;
     private float _speedMultiplier = 2f;
+
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
-    private float _fireRate = 0.2f;
+    private GameObject _photonPrefab;
+    [SerializeField]
+    private float _laserFireRate = 0.2f;
+    private float _photonFireRate = 1f;
     private float _canFire = -1f;
-    [SerializeField]
-    private int _lives = 3;
-    [SerializeField]
     private int _startAmmo = 15;
-    [SerializeField]
     private int _currentAmmo;
+
+    private int _lives = 3;
+
     private SpawnManager _spawnManager;
-    [SerializeField]
     private bool _isTripleShotActive = false;
-    [SerializeField]
-    private bool _isShieldActive = false;
     private int _shieldState = 0;
     private bool _isSpeedBoostActive = false;
+    private bool _isPhotonActive = false;
     private bool _isPlayerInvulnerable;
     private float _playerDamageTime;
     private float _playerSafePeriod = 0.2f;
@@ -86,13 +86,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
-        /*
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+
+        if (Input.GetButtonDown("Fire1") && Time.time > _canFire && _isPhotonActive == true)
         {
-            FireLaser();
+            FirePhoton();
         }
-        */
-        if (Input.GetButtonDown("Fire1") && Time.time > _canFire)
+        else if (Input.GetButtonDown("Fire1") && Time.time > _canFire)
         {
             FireLaser();
         }
@@ -125,7 +124,7 @@ public class Player : MonoBehaviour
 
     void FireLaser()
     {
-        _canFire = Time.time + _fireRate;        
+        _canFire = Time.time + _laserFireRate;        
 
         if (_currentAmmo <= 0)
         {
@@ -145,6 +144,13 @@ public class Player : MonoBehaviour
 
         PlayerAmmo(-1);
 
+    }
+
+    void FirePhoton()
+    {
+        _canFire = Time.time + _photonFireRate;
+        Instantiate(_photonPrefab, transform.position, Quaternion.identity);
+        _audioSource.Play();
     }
 
     public void Damage()
@@ -282,5 +288,17 @@ public class Player : MonoBehaviour
             _leftEngineVisualiser.SetActive(false);
         }
         _uiManager.UpdateLives(_lives);
+    }
+
+    public void PhotonActive()
+    {
+        StartCoroutine(PhotonActiveRoutine());
+    }
+
+    IEnumerator PhotonActiveRoutine()
+    {
+        _isPhotonActive = true;
+        yield return new WaitForSeconds(5);
+        _isPhotonActive = false;
     }
 }
