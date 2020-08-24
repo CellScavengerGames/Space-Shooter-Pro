@@ -5,22 +5,54 @@ using UnityEngine;
 public class Photon : MonoBehaviour
 {
     private float _photonSpeed = 15f;
-    //[SerializeField]
-    //private Transform _target;
-    //private GameObject[] photonTargets;
-    //private Transform[] enemies;
+    [SerializeField]
+    private Transform _target;
+    private GameObject[] photonTargets;
+    private Transform[] _currentEnemies;
 
     private void Start()
     {
-        //Find all existing enemies
-        //locate the closest enemy
+        photonTargets = GameObject.FindGameObjectsWithTag("Enemy");
+
+        _currentEnemies = new Transform[photonTargets.Length];
+
+        for (int i = 0; i < photonTargets.Length; i++)
+        {
+            _currentEnemies[i] = photonTargets[i].transform;
+        }
+
+        GetClosestEnemy(_currentEnemies);
+    }
+
+    Transform GetClosestEnemy(Transform[] enemies)
+    {
+        _target = null;
+        float smallestDistanceSqd = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+        foreach (Transform potentialTarget in enemies)
+        {
+            Vector3 directionToTarget = potentialTarget.position - currentPosition;
+            float distSqdToTarget = directionToTarget.sqrMagnitude;
+            if (distSqdToTarget < smallestDistanceSqd)
+            {
+                smallestDistanceSqd = distSqdToTarget;
+                _target = potentialTarget;
+            }
+        }
+
+        return _target;
     }
 
     private void Update()
     {
-        //if there is an enemy or enemies on screen, move towards the closest
-        //if not, move off screen
-        MoveUp();
+        if (_target == null)
+        {
+            MoveUp();
+        }
+        else
+        {
+            AutoTarget();
+        }
     }
 
     void MoveUp()
@@ -34,6 +66,16 @@ public class Photon : MonoBehaviour
                 Destroy(transform.parent.gameObject);
             }
 
+            Destroy(gameObject);
+        }
+    }
+
+    void AutoTarget()
+    {
+        float step = _photonSpeed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, _target.position, step);
+        if (Vector3.Distance(transform.position, _target.position) == 0f)
+        {
             Destroy(gameObject);
         }
     }

@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour
             {
                 _player.Damage();
             }
-
+            gameObject.tag = "Untagged";
             _enemyDestroyedAnim.SetTrigger("OnEnemyDeath");
             _enemySpeed = 0.5f;
             _audioSource.Play();
@@ -86,6 +86,7 @@ public class Enemy : MonoBehaviour
 
         if (other.tag == "Laser")
         {
+            gameObject.tag = "Untagged";
             _enemyDestroyedAnim.SetTrigger("OnEnemyDeath");
             _enemySpeed = 0.5f;
             _audioSource.Play();

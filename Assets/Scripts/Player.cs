@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     private GameObject _photonPrefab;
     [SerializeField]
     private float _laserFireRate = 0.2f;
-    private float _photonFireRate = 1f;
+    private float _photonFireRate = 0.5f;
     private float _canFire = -1f;
     private int _startAmmo = 15;
     private int _currentAmmo;
@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
     {
         CalculateMovement();
 
-        if (Input.GetButtonDown("Fire1") && Time.time > _canFire && _isPhotonActive == true)
+        if (Input.GetButton("Fire1") && Time.time > _canFire && _isPhotonActive == true)
         {
             FirePhoton();
         }
