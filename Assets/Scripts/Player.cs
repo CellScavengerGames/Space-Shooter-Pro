@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -49,10 +50,15 @@ public class Player : MonoBehaviour
     private Animator _playerAnim;
     private Shield _shieldStateColor;
     private Camera_Shake _cameraShake;
+    private float _maxBoost = 100f;
+    [SerializeField]
+    private float _currentBoost;
+    private bool _isUsingBoost = false;
 
     void Start()
     {
         _currentAmmo = _startAmmo;
+        _currentBoost = _maxBoost;
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -60,6 +66,7 @@ public class Player : MonoBehaviour
         _playerAnim = GetComponent<Animator>();
         _shieldStateColor = GameObject.Find("Shield").GetComponentInChildren<Shield>();
         _cameraShake = GameObject.Find("Main Camera").GetComponent<Camera_Shake>();
+
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL.");
@@ -101,10 +108,27 @@ public class Player : MonoBehaviour
         if (Input.GetButton("Trigger1") && _isSpeedBoostActive == false)
         {
             _speed = 16f;
+            _isUsingBoost = true;
         }
         else if (Input.GetButtonUp("Trigger1") && _isSpeedBoostActive == false)
         {
             _speed = 10f;
+            _isUsingBoost = false;
+        }
+
+        if (_isUsingBoost = true)
+        {
+            _currentBoost -= Time.deltaTime;
+            if (_currentBoost < 0)
+            {
+                _currentBoost = 0;
+                _speed = 10f;
+            }
+            else if (_currentBoost < _maxBoost)
+            {
+                _currentBoost += Time.deltaTime;
+            }
+            _uiManager.UseBoost(_currentBoost);
         }
     }
 

@@ -19,8 +19,12 @@ public class UIManager : MonoBehaviour
     private Sprite[] _livesSprites;
     [SerializeField]
     private Text _ammoText;
-
+    [SerializeField]
+    private Slider _boostBar;
     private GameManager _gameManager;
+
+    private float _maxBoost = 100f;
+    private float _currentBoost;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +34,10 @@ public class UIManager : MonoBehaviour
         _gameOverText.gameObject.SetActive(false);
         _restartLevelText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+
+        _currentBoost = _maxBoost;
+        _boostBar.maxValue = _maxBoost;
+        _boostBar.value = _maxBoost;
 
         if (_gameManager == null)
         {
@@ -78,4 +86,33 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
+
+    public void UseBoost(float boost)
+    {
+        _currentBoost = boost;
+        if (_currentBoost <= 0)
+        {
+            _currentBoost = 0;
+        }
+        _boostBar.value = _currentBoost;
+    }
+
+    /*IEnumerator UseBoostRoutine(int boost)
+    {
+        if (_currentBoost >= boost)
+        {
+            _currentBoost -= boost;
+            _boostBar.value = _currentBoost;
+        }
+        else
+        {
+            Debug.Log("Not enough boost");
+        }
+        
+    }*/
+
+    /*public void UseBoost(int boost)
+    {
+        StartCoroutine(UseBoostRoutine(boost));
+    }*/
 }
