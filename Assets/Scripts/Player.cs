@@ -246,10 +246,13 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
-        _speed = 10f;
-        _isSpeedBoostActive = true;
-        _speed *= _speedMultiplier;
-        StartCoroutine(SpeedBoostPowerDownRoutine());
+        if (_isSpeedBoostActive == false)
+        {
+            _speed = 10f;
+            _isSpeedBoostActive = true;
+            _speed *= _speedMultiplier;
+            StartCoroutine(SpeedBoostPowerDownRoutine());
+        }
     }
 
     IEnumerator SpeedBoostPowerDownRoutine()
