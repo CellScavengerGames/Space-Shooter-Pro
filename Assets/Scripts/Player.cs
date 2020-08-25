@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
 
     private Animator _playerAnim;
     private Shield _shieldStateColor;
+    private Camera_Shake _cameraShake;
 
     void Start()
     {
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _playerAnim = GetComponent<Animator>();
         _shieldStateColor = GameObject.Find("Shield").GetComponentInChildren<Shield>();
+        _cameraShake = GameObject.Find("Main Camera").GetComponent<Camera_Shake>();
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL.");
@@ -200,6 +202,7 @@ public class Player : MonoBehaviour
 
                 _isPlayerInvulnerable = true;
                 _playerDamageTime = Time.time + _playerSafePeriod;
+                StartCoroutine(_cameraShake.CamShake(0.4f, 0.1f));
             }
             /*_lives -= 1;
 
