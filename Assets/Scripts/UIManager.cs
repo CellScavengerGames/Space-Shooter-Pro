@@ -97,6 +97,16 @@ public class UIManager : MonoBehaviour
         _boostBar.value = _currentBoost;
     }
 
+    public void RechargeBoost(float boost)
+    {
+        _currentBoost = boost;
+        if (_currentBoost >= 100)
+        {
+            _currentBoost = 100;
+        }
+        _boostBar.value = _currentBoost;
+    }
+
     /*IEnumerator UseBoostRoutine(int boost)
     {
         if (_currentBoost >= boost)

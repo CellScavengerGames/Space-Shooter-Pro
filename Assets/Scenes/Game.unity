@@ -1738,6 +1738,7 @@ MonoBehaviour:
   _rightEngineVisualiser: {fileID: 879818262}
   _score: 0
   _laserShotClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
+  _currentBoost: 0
 --- !u!212 &1573705940
 SpriteRenderer:
   m_ObjectHideFlags: 0

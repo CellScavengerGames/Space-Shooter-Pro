@@ -50,10 +50,14 @@ public class Player : MonoBehaviour
     private Animator _playerAnim;
     private Shield _shieldStateColor;
     private Camera_Shake _cameraShake;
+
     private float _maxBoost = 100f;
     [SerializeField]
     private float _currentBoost;
-    private bool _isUsingBoost = false;
+    private float _boostUsageRate = 20f;
+    private float _boostRechargeDelay = 3f;
+    private float _boostRechargeTimer = 3f;
+    private float _boostRechargeRate = 10f;
 
     void Start()
     {
@@ -94,6 +98,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        bool _isBoostActive = Input.GetButton("Trigger1");
+
         CalculateMovement();
 
         if (Input.GetButton("Fire1") && Time.time > _canFire && _isPhotonActive == true)
@@ -105,30 +111,34 @@ public class Player : MonoBehaviour
             FireLaser();
         }
 
-        if (Input.GetButton("Trigger1") && _isSpeedBoostActive == false)
+        if (_isBoostActive && _isSpeedBoostActive == false)
         {
-            _speed = 16f;
-            _isUsingBoost = true;
-        }
-        else if (Input.GetButtonUp("Trigger1") && _isSpeedBoostActive == false)
-        {
-            _speed = 10f;
-            _isUsingBoost = false;
-        }
-
-        if (_isUsingBoost = true)
-        {
-            _currentBoost -= Time.deltaTime;
-            if (_currentBoost < 0)
+            _currentBoost = Mathf.Clamp(_currentBoost - (_boostUsageRate * Time.deltaTime), 0.0f, _maxBoost);
+            _boostRechargeTimer = 0f;
+            if (_currentBoost > 0)
             {
-                _currentBoost = 0;
+                _speed = 16f;
+            }
+            else
+            {
                 _speed = 10f;
             }
-            else if (_currentBoost < _maxBoost)
-            {
-                _currentBoost += Time.deltaTime;
-            }
             _uiManager.UseBoost(_currentBoost);
+        }
+        else if (_currentBoost < _maxBoost && _isSpeedBoostActive == false)
+        {
+            if (_boostRechargeDelay >= _boostRechargeTimer)
+            {
+                _currentBoost = Mathf.Clamp(_currentBoost + (_boostRechargeRate * Time.deltaTime), 0.0f, _maxBoost);
+                _speed = 10f;
+                //BoostRecharge();
+                //StartCoroutine(BoostRechargeRoutine());
+                _uiManager.UseBoost(_currentBoost);
+            }
+        }
+        else
+        {
+            _boostRechargeDelay += Time.deltaTime;
         }
     }
 
@@ -331,4 +341,26 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5);
         _isPhotonActive = false;
     }
+
+    /*private void BoostRecharge()
+    {
+        StartCoroutine(BoostRechargeRoutine());
+        while (_currentBoost < 100)
+        {
+            _currentBoost += Time.deltaTime * 10;
+            _uiManager.UseBoost(_currentBoost);
+        }
+    }
+
+    /*IEnumerator BoostRechargeRoutine()
+    {
+        yield return new WaitForSeconds(3f);
+        while (_currentBoost < 100)
+        { 
+            yield
+            _currentBoost += 10f * Time.deltaTime;
+        }
+        _uiManager.RechargeBoost(_currentBoost);
+        yield return null;
+    }*/
 }
